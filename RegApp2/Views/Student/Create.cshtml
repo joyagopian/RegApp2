@@ -1,0 +1,145 @@
+﻿@model RegApp2.Models.profile
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>profile</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.uid)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.uid)
+            @Html.ValidationMessageFor(model => model.uid)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.firstname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.firstname)
+            @Html.ValidationMessageFor(model => model.firstname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.lastname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.lastname)
+            @Html.ValidationMessageFor(model => model.lastname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.email)
+            @Html.ValidationMessageFor(model => model.email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.dob)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.dob)
+            @Html.ValidationMessageFor(model => model.dob)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.gender)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.gender)
+            @Html.ValidationMessageFor(model => model.gender)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.addressOne)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.addressOne)
+            @Html.ValidationMessageFor(model => model.addressOne)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.addressTwo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.addressTwo)
+            @Html.ValidationMessageFor(model => model.addressTwo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.phone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.phone)
+            @Html.ValidationMessageFor(model => model.phone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.mobile)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.mobile)
+            @Html.ValidationMessageFor(model => model.mobile)
+        </div>
+        <input type="hidden" value="1" />
+        <div class="editor-field">
+            <label>active</label>
+            @Html.RadioButton("active", 1)
+            <label>Unactive</label>
+            @Html.RadioButton("active", 0)
+            @Html.ValidationMessageFor(model => model.active)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.semester)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.semester)
+            @Html.ValidationMessageFor(model => model.semester)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Describtion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Describtion)
+            @Html.ValidationMessageFor(model => model.Describtion)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    
+ <script type="text/ecmascript">
+     //$(function () {
+     //    $("#dob").datepicker({
+     //        changeMonth: true,
+     //        changeYear: true
+     //    });
+     //});
+     });
+</script>
+
+
+}

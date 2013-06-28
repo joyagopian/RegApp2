@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="registration" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=JOY;Initial Catalog=registration;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="registrationConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.attendance" Member="attendances">
+    <Type Name="attendance">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="studentSchedualId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="checkA" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Association Name="attendance_attendanceUser" Member="attendanceUsers" ThisKey="id" OtherKey="attendanceId" Type="attendanceUser" />
+    </Type>
+  </Table>
+  <Table Name="dbo.teacherSchedule" Member="teacherSchedules">
+    <Type Name="teacherSchedule">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="scheduleProfileId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="schedualSchedualId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="schedualEvaluation" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="profile_teacherSchedule" Member="profile" ThisKey="scheduleProfileId" OtherKey="id" Type="profile" IsForeignKey="true" />
+      <Association Name="schedule_teacherSchedule" Member="schedule" ThisKey="schedualSchedualId" OtherKey="id" Type="schedule" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.attendanceUser" Member="attendanceUsers">
+    <Type Name="attendanceUser">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="attendanceId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="attendance_attendanceUser" Member="attendance" ThisKey="attendanceId" OtherKey="id" Type="attendance" IsForeignKey="true" />
+      <Association Name="profile_attendanceUser" Member="profile" ThisKey="UserId" OtherKey="id" Type="profile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.courses" Member="courses">
+    <Type Name="course">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="describtion" Type="System.Data.Linq.Binary" DbType="VarBinary(255) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="active" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="courseIdentifier" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="teacherId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="course_DepartmentCourse" Member="DepartmentCourses" ThisKey="id" OtherKey="courseId" Type="DepartmentCourse" />
+      <Association Name="course_schedule" Member="schedules" ThisKey="id" OtherKey="courseid" Type="schedule" />
+      <Association Name="course_studentCourse" Member="studentCourse" ThisKey="id" OtherKey="Id" Type="studentCourse" Cardinality="One" />
+      <Association Name="course_teacherCourse" Member="teacherCourse" ThisKey="id" OtherKey="id" Type="teacherCourse" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Department" Member="Departments">
+    <Type Name="Department">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Describtion" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="Department_DepartmentCourse" Member="DepartmentCourse" ThisKey="id" OtherKey="DepartmentCourseId" Type="DepartmentCourse" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DepartmentCourse" Member="DepartmentCourses">
+    <Type Name="DepartmentCourse">
+      <Column Name="DepartmentCourseId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="courseId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="departmentId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="course_DepartmentCourse" Member="course" ThisKey="courseId" OtherKey="id" Type="course" IsForeignKey="true" />
+      <Association Name="Department_DepartmentCourse" Member="Department" ThisKey="DepartmentCourseId" OtherKey="id" Type="Department" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.profiles" Member="profiles">
+    <Type Name="profile">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="uid" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="firstname" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="lastname" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="dob" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="gender" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="addressOne" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="addressTwo" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="mobile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="roleId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="active" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+      <Column Name="semester" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Describtion" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="profile_teacherSchedule" Member="teacherSchedules" ThisKey="id" OtherKey="scheduleProfileId" Type="teacherSchedule" />
+      <Association Name="profile_attendanceUser" Member="attendanceUsers" ThisKey="id" OtherKey="UserId" Type="attendanceUser" />
+      <Association Name="profile_studentCourse" Member="studentCourses" ThisKey="id" OtherKey="profileId" Type="studentCourse" />
+      <Association Name="profile_studentSchedule" Member="studentSchedules" ThisKey="id" OtherKey="scheduleProfileId" Type="studentSchedule" />
+      <Association Name="role_profile" Member="role" ThisKey="roleId" OtherKey="roleId" Type="role" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.roles" Member="roles">
+    <Type Name="role">
+      <Column Name="roleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="describtion" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Association Name="role_profile" Member="profiles" ThisKey="roleId" OtherKey="roleId" Type="profile" />
+    </Type>
+  </Table>
+  <Table Name="dbo.rooms" Member="rooms">
+    <Type Name="room">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="describtion" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="room_schedule" Member="schedules" ThisKey="id" OtherKey="roomId" Type="schedule" />
+    </Type>
+  </Table>
+  <Table Name="dbo.schedule" Member="schedules">
+    <Type Name="schedule">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="courseid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="startDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="endDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="time" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="roomId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Association Name="schedule_teacherSchedule" Member="teacherSchedules" ThisKey="id" OtherKey="schedualSchedualId" Type="teacherSchedule" />
+      <Association Name="schedule_studentSchedule" Member="studentSchedules" ThisKey="id" OtherKey="scheduleScheduleId" Type="studentSchedule" />
+      <Association Name="course_schedule" Member="course" ThisKey="courseid" OtherKey="id" Type="course" IsForeignKey="true" />
+      <Association Name="room_schedule" Member="room" ThisKey="roomId" OtherKey="id" Type="room" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.sessions" Member="sessions">
+    <Type Name="session">
+      <Column Name="oid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="uid" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="pwd" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="dn" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="time" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.studentCourse" Member="studentCourses">
+    <Type Name="studentCourse">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="courseId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="profileId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Grade" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="course_studentCourse" Member="course" ThisKey="Id" OtherKey="id" Type="course" IsForeignKey="true" />
+      <Association Name="profile_studentCourse" Member="profile" ThisKey="profileId" OtherKey="id" Type="profile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.studentSchedule" Member="studentSchedules">
+    <Type Name="studentSchedule">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="scheduleProfileId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="scheduleScheduleId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="paid" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Association Name="profile_studentSchedule" Member="profile" ThisKey="scheduleProfileId" OtherKey="id" Type="profile" IsForeignKey="true" />
+      <Association Name="schedule_studentSchedule" Member="schedule" ThisKey="scheduleScheduleId" OtherKey="id" Type="schedule" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.teacher" Member="teachers">
+    <Type Name="teacher">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="lastName" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="address" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="mobile" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="courseId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="teacher_teacherCourse" Member="teacherCourses" ThisKey="id" OtherKey="teacherId" Type="teacherCourse" />
+    </Type>
+  </Table>
+  <Table Name="dbo.teacherCourse" Member="teacherCourses">
+    <Type Name="teacherCourse">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="teacherId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="courseId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="course_teacherCourse" Member="course" ThisKey="id" OtherKey="id" Type="course" IsForeignKey="true" />
+      <Association Name="teacher_teacherCourse" Member="teacher" ThisKey="teacherId" OtherKey="id" Type="teacher" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
