@@ -61,11 +61,12 @@
   <Table Name="dbo.profiles" Member="profiles">
     <Type Name="profile">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="uid" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="uid" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="semesterid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="firstname" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="lastname" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="dob" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="dob" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="gender" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
       <Column Name="addressOne" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="addressTwo" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
@@ -74,13 +75,13 @@
       <Column Name="roleId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="active" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Column Name="date" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
-      <Column Name="semester" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Describtion" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Association Name="profile_teacherSchedule" Member="teacherSchedules" ThisKey="id" OtherKey="scheduleProfileId" Type="teacherSchedule" />
       <Association Name="profile_attendanceUser" Member="attendanceUsers" ThisKey="id" OtherKey="UserId" Type="attendanceUser" />
       <Association Name="profile_studentCourse" Member="studentCourses" ThisKey="id" OtherKey="profileId" Type="studentCourse" />
       <Association Name="profile_studentSchedule" Member="studentSchedules" ThisKey="id" OtherKey="scheduleProfileId" Type="studentSchedule" />
       <Association Name="role_profile" Member="role" ThisKey="roleId" OtherKey="roleId" Type="role" IsForeignKey="true" />
+      <Association Name="semester_profile" Member="semester" ThisKey="semesterid" OtherKey="id" Type="semester" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.roles" Member="roles">
@@ -114,6 +115,14 @@
       <Association Name="schedule_studentSchedule" Member="studentSchedules" ThisKey="id" OtherKey="scheduleScheduleId" Type="studentSchedule" />
       <Association Name="course_schedule" Member="course" ThisKey="courseid" OtherKey="id" Type="course" IsForeignKey="true" />
       <Association Name="room_schedule" Member="room" ThisKey="roomId" OtherKey="id" Type="room" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.semester" Member="semesters">
+    <Type Name="semester">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="semesterName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Describtion" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="semester_profile" Member="profiles" ThisKey="id" OtherKey="semesterid" Type="profile" />
     </Type>
   </Table>
   <Table Name="dbo.sessions" Member="sessions">

@@ -3,9 +3,14 @@
 @{
     ViewBag.Title = "Create";
 }
+@section Head {
 
+}
 
 <h2>Create</h2>
+
+
+ 
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
@@ -13,13 +18,6 @@
     <fieldset>
         <legend>profile</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.uid)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.uid)
-            @Html.ValidationMessageFor(model => model.uid)
-        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.firstname)
@@ -57,7 +55,7 @@
             @Html.LabelFor(model => model.gender)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.gender)
+            @Html.DropDownList("gender", ViewData["gender"] as SelectList)
             @Html.ValidationMessageFor(model => model.gender)
         </div>
 
@@ -105,7 +103,7 @@
             @Html.LabelFor(model => model.semester)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.semester)
+            @Html.DropDownListFor(Model => Model.semester,ViewData["semestersList"] as SelectList)
             @Html.ValidationMessageFor(model => model.semester)
         </div>
 
@@ -113,7 +111,7 @@
             @Html.LabelFor(model => model.Describtion)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Describtion)
+            @Html.TextAreaFor(model => model.Describtion)
             @Html.ValidationMessageFor(model => model.Describtion)
         </div>
 
@@ -128,18 +126,7 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 
-    
- <script type="text/ecmascript">
-     //$(function () {
-     //    $("#dob").datepicker({
-     //        changeMonth: true,
-     //        changeYear: true
-     //    });
-     //});
-     });
-</script>
-
+  
 
 }

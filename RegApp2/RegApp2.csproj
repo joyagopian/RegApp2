@@ -176,9 +176,11 @@
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\profileRepository.cs" />
+    <Compile Include="Models\semesterRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\demos.css" />
     <Content Include="Content\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="Content\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="Content\images\ui-bg_flat_10_000000_40x100.png" />
@@ -195,6 +197,7 @@
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\jquery-ui-1.9.2.custom.css" />
     <Content Include="Content\jquery-ui-1.9.2.custom.min.css" />
+    <Content Include="Content\jquery.ui.all.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -259,6 +262,8 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jquery-1.8.3.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\demos\autocomplete\search.php" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\demos\tabs\ajax\content3-slow.php" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\demos\tabs\ajax\content4-broken.php" />
@@ -740,8 +745,8 @@
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.accordion.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.autocomplete.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.button.js" />
-    <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.core.js" />
-    <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.datepicker.js" />
+    <Content Include="Scripts\jquery.ui.core.js" />
+    <Content Include="Scripts\jquery.ui.datepicker.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.dialog.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.draggable.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.droppable.js" />
@@ -770,7 +775,7 @@
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.spinner.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.tabs.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.tooltip.js" />
-    <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\jquery.ui.widget.js" />
+    <Content Include="Scripts\jquery.ui.widget.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\minified\i18n\jquery-ui-i18n.min.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\minified\i18n\jquery.ui.datepicker-af.min.js" />
     <Content Include="Scripts\jquery-ui-1.9.2.custom\jquery-ui-1.9.2.custom\development-bundle\ui\minified\i18n\jquery.ui.datepicker-ar-DZ.min.js" />

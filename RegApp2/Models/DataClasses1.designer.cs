@@ -60,6 +60,9 @@ namespace RegApp2.Models
     partial void Insertschedule(schedule instance);
     partial void Updateschedule(schedule instance);
     partial void Deleteschedule(schedule instance);
+    partial void Insertsemester(semester instance);
+    partial void Updatesemester(semester instance);
+    partial void Deletesemester(semester instance);
     partial void Insertsession(session instance);
     partial void Updatesession(session instance);
     partial void Deletesession(session instance);
@@ -184,6 +187,14 @@ namespace RegApp2.Models
 			get
 			{
 				return this.GetTable<schedule>();
+			}
+		}
+		
+		public System.Data.Linq.Table<semester> semesters
+		{
+			get
+			{
+				return this.GetTable<semester>();
 			}
 		}
 		
@@ -1420,13 +1431,15 @@ namespace RegApp2.Models
 		
 		private string _uid;
 		
+		private int _semesterid;
+		
 		private string _firstname;
 		
 		private string _lastname;
 		
 		private string _email;
 		
-		private System.DateTime _dob;
+		private string _dob;
 		
 		private string _gender;
 		
@@ -1444,8 +1457,6 @@ namespace RegApp2.Models
 		
 		private System.Data.Linq.Binary _date;
 		
-		private string _semester;
-		
 		private string _Describtion;
 		
 		private EntitySet<teacherSchedule> _teacherSchedules;
@@ -1458,6 +1469,8 @@ namespace RegApp2.Models
 		
 		private EntityRef<role> _role;
 		
+		private EntityRef<semester> _semester;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1466,13 +1479,15 @@ namespace RegApp2.Models
     partial void OnidChanged();
     partial void OnuidChanging(string value);
     partial void OnuidChanged();
+    partial void OnsemesteridChanging(int value);
+    partial void OnsemesteridChanged();
     partial void OnfirstnameChanging(string value);
     partial void OnfirstnameChanged();
     partial void OnlastnameChanging(string value);
     partial void OnlastnameChanged();
     partial void OnemailChanging(string value);
     partial void OnemailChanged();
-    partial void OndobChanging(System.DateTime value);
+    partial void OndobChanging(string value);
     partial void OndobChanged();
     partial void OngenderChanging(string value);
     partial void OngenderChanged();
@@ -1490,8 +1505,6 @@ namespace RegApp2.Models
     partial void OnactiveChanged();
     partial void OndateChanging(System.Data.Linq.Binary value);
     partial void OndateChanged();
-    partial void OnsemesterChanging(string value);
-    partial void OnsemesterChanged();
     partial void OnDescribtionChanging(string value);
     partial void OnDescribtionChanged();
     #endregion
@@ -1503,6 +1516,7 @@ namespace RegApp2.Models
 			this._studentCourses = new EntitySet<studentCourse>(new Action<studentCourse>(this.attach_studentCourses), new Action<studentCourse>(this.detach_studentCourses));
 			this._studentSchedules = new EntitySet<studentSchedule>(new Action<studentSchedule>(this.attach_studentSchedules), new Action<studentSchedule>(this.detach_studentSchedules));
 			this._role = default(EntityRef<role>);
+			this._semester = default(EntityRef<semester>);
 			OnCreated();
 		}
 		
@@ -1526,7 +1540,7 @@ namespace RegApp2.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_uid", DbType="VarChar(100)", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_uid", DbType="VarChar(100) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
 		public string uid
 		{
 			get
@@ -1542,6 +1556,30 @@ namespace RegApp2.Models
 					this._uid = value;
 					this.SendPropertyChanged("uid");
 					this.OnuidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_semesterid", DbType="Int NOT NULL", UpdateCheck=UpdateCheck.Never)]
+		public int semesterid
+		{
+			get
+			{
+				return this._semesterid;
+			}
+			set
+			{
+				if ((this._semesterid != value))
+				{
+					if (this._semester.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnsemesteridChanging(value);
+					this.SendPropertyChanging();
+					this._semesterid = value;
+					this.SendPropertyChanged("semesterid");
+					this.OnsemesteridChanged();
 				}
 			}
 		}
@@ -1606,8 +1644,8 @@ namespace RegApp2.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dob", DbType="Date NOT NULL", UpdateCheck=UpdateCheck.Never)]
-		public System.DateTime dob
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dob", DbType="NVarChar(100) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public string dob
 		{
 			get
 			{
@@ -1790,26 +1828,6 @@ namespace RegApp2.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_semester", DbType="VarChar(50)", UpdateCheck=UpdateCheck.Never)]
-		public string semester
-		{
-			get
-			{
-				return this._semester;
-			}
-			set
-			{
-				if ((this._semester != value))
-				{
-					this.OnsemesterChanging(value);
-					this.SendPropertyChanging();
-					this._semester = value;
-					this.SendPropertyChanged("semester");
-					this.OnsemesterChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Describtion", DbType="VarChar(255)", UpdateCheck=UpdateCheck.Never)]
 		public string Describtion
 		{
@@ -1912,6 +1930,40 @@ namespace RegApp2.Models
 						this._roleId = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("role");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="semester_profile", Storage="_semester", ThisKey="semesterid", OtherKey="id", IsForeignKey=true)]
+		public semester semester
+		{
+			get
+			{
+				return this._semester.Entity;
+			}
+			set
+			{
+				semester previousValue = this._semester.Entity;
+				if (((previousValue != value) 
+							|| (this._semester.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._semester.Entity = null;
+						previousValue.profiles.Remove(this);
+					}
+					this._semester.Entity = value;
+					if ((value != null))
+					{
+						value.profiles.Add(this);
+						this._semesterid = value.id;
+					}
+					else
+					{
+						this._semesterid = default(int);
+					}
+					this.SendPropertyChanged("semester");
 				}
 			}
 		}
@@ -2650,6 +2702,144 @@ namespace RegApp2.Models
 		{
 			this.SendPropertyChanging();
 			entity.schedule = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.semester")]
+	public partial class semester : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _semesterName;
+		
+		private string _Describtion;
+		
+		private EntitySet<profile> _profiles;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnsemesterNameChanging(string value);
+    partial void OnsemesterNameChanged();
+    partial void OnDescribtionChanging(string value);
+    partial void OnDescribtionChanged();
+    #endregion
+		
+		public semester()
+		{
+			this._profiles = new EntitySet<profile>(new Action<profile>(this.attach_profiles), new Action<profile>(this.detach_profiles));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_semesterName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string semesterName
+		{
+			get
+			{
+				return this._semesterName;
+			}
+			set
+			{
+				if ((this._semesterName != value))
+				{
+					this.OnsemesterNameChanging(value);
+					this.SendPropertyChanging();
+					this._semesterName = value;
+					this.SendPropertyChanged("semesterName");
+					this.OnsemesterNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Describtion", DbType="NVarChar(255)")]
+		public string Describtion
+		{
+			get
+			{
+				return this._Describtion;
+			}
+			set
+			{
+				if ((this._Describtion != value))
+				{
+					this.OnDescribtionChanging(value);
+					this.SendPropertyChanging();
+					this._Describtion = value;
+					this.SendPropertyChanged("Describtion");
+					this.OnDescribtionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="semester_profile", Storage="_profiles", ThisKey="id", OtherKey="semesterid")]
+		public EntitySet<profile> profiles
+		{
+			get
+			{
+				return this._profiles;
+			}
+			set
+			{
+				this._profiles.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_profiles(profile entity)
+		{
+			this.SendPropertyChanging();
+			entity.semester = this;
+		}
+		
+		private void detach_profiles(profile entity)
+		{
+			this.SendPropertyChanging();
+			entity.semester = null;
 		}
 	}
 	

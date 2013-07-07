@@ -13,6 +13,7 @@ namespace RegApp2.Controllers
         // GET: /Student/
 
         ProfileRepository repo = new ProfileRepository();
+        semesterRepository SRepo = new semesterRepository();
         const int pageSize = 10;
         [HttpGet]
         public ActionResult Index(int page = 1, int sortBy = 1, bool isAsc = true)
@@ -61,7 +62,8 @@ namespace RegApp2.Controllers
             }
             #endregion
 
-            profiles = repo.GetAll().OrderBy(x => x.id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+           // profiles = repo.GetAll().OrderBy(x => x.id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            profiles = repo.GetAll();
             ViewBag.currentPage = page;
             ViewBag.PageSize = pageSize;
             ViewBag.totalPages = Math.Ceiling((double)repo.GetAll().Count() / pageSize);
@@ -70,6 +72,15 @@ namespace RegApp2.Controllers
 
         public ActionResult Create()
         {
+            var gender = new SelectList(new[]
+                                          {
+                                              new {ID="Male",Name="Male"},
+                                              new{ID="Female",Name="Female"}
+                                          },
+                          "ID", "Name", 1);
+            ViewData["gender"] = gender;
+            var semestersList = new SelectList(SRepo.getAll().OrderBy(s => s.semesterName), "id", "semesterName", null);
+            ViewData["semestersList"] = semestersList;
             return View();
         }
 
@@ -78,8 +89,19 @@ namespace RegApp2.Controllers
         {
             try
             {
-                UpdateModel(entry);
 
+                var gender = new SelectList(new[]
+                                          {
+                                              new {ID="Male",Name="Male"},
+                                              new{ID="Female",Name="Female"}
+                                          },
+              "ID", "Name", 1);
+                ViewData["gender"] = gender;
+                var semestersList = new SelectList(SRepo.getAll().OrderBy(s => s.semesterName), "id", "semesterName", null);
+                ViewData["semestersList"] = semestersList;
+
+                entry.semester.id= 1;
+                UpdateModel(entry);
                 repo.Add(entry);
                 repo.Save();
 
